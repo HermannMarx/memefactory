@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+.meme {
+  position: relative;
+  text-align: center;
+}
+
+.toptext {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: white;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+}
+
+.bottomtext {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+}
+
+img {
+  width: 35vw;
+  height: auto;
+}
+
+.link {
+  margin: 10px;
+  text-decoration: none;
+  color: black;
+  border: 1px dotted black;
+  border-radius: 50%;
+}
