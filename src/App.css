@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+.meme {
+  position: relative;
+  text-align: center;
+}
+
+.toptext {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+.bottomtext {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+img {
+  width: 35vw;
+  height: auto;
+}
+
+#create {
+}
+
+.link {
+  margin: 10px;
+  text-decoration: none;
+  color: black;
+  border: 1px dotted black;
+  border-radius: 50%;
+}
