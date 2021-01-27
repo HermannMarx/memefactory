@@ -6,7 +6,7 @@ import axios from "axios";
 import domtoimage from "dom-to-image";
 
 function App() {
-  let [meme, setMeme] = useState("https://i.imgflip.com/23ls.jpg");
+  let [meme, setMeme] = useState("https://i.imgflip.com/30b1gx.jpg");
   let [textTop, setTextTop] = useState("");
   let [textBottom, setTextBottom] = useState("");
   let [allMemes, setAllMemes] = useState([]);
