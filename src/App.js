@@ -1,29 +1,33 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect, useReducer, useRef } from "react";
-import { Switch, Link, Route } from "react-router-dom";
+import { Switch, Link, Route, Redirect } from "react-router-dom";
 import axios from "axios";
 import domtoimage from "dom-to-image";
 
 function App() {
-  let [meme, setMeme] = useState();
+  let [meme, setMeme] = useState("https://i.imgflip.com/23ls.jpg");
   let [textTop, setTextTop] = useState("");
   let [textBottom, setTextBottom] = useState("");
   let [allMemes, setAllMemes] = useState([]);
+  let [savedURL, setSavedURL] = useState();
 
-  const getMemes = () => {
-    axios
+  const imgRef = useRef(null);
+
+  const getMemes = async () => {
+    await axios
       .get("https://api.imgflip.com/get_memes")
       .then((res) => {
         console.log(res.data.data.memes);
         setAllMemes(res.data.data.memes);
-        console.log(allMemes);
+        console.log("This is all memes: ", allMemes);
       })
       .catch((error) => console.log(error));
   };
 
   const changePicture = () => {
     const random = Math.floor(Math.random() * 99);
+    console.log("This is all Memes: ", allMemes);
     console.log(random);
     setMeme(allMemes[random].url);
   };
@@ -48,34 +52,24 @@ function App() {
       });
   });
 
-  let [savedIMG, setSavedIMG] = useState("Hello");
-  const imgRef = useRef(null);
-
   const savePic = () => {
-    console.log(imgRef);
+    console.log(imgRef.current);
 
     domtoimage
-      .toPng(imgRef)
+      .toPng(imgRef.current)
       .then(function (dataUrl) {
-        var img = new Image();
-        img.src = dataUrl;
-        //   document.body.appendChild(img);
+        setSavedURL(dataUrl);
       })
       .catch(function (error) {
         console.error("oops, something went wrong!", error);
       });
-
-    /*   domtoimage.toPng(imgRef).then(function (url) {
-      console.log(url);
-      setSavedIMG(url);
-    }); */
-    //.catch((error) => console.log(error))
   };
 
-  /*   function imageIsLoaded() { 
-    alert(this.src);  // blob url
-    // update width and height ...
-  } */
+  const deletePic = () => {
+    setSavedURL(null);
+    setTextBottom("");
+    setTextTop("");
+  };
 
   const browse1 = allMemes.slice(0, 20);
   const browse2 = allMemes.slice(20, 40);
@@ -109,15 +103,7 @@ function App() {
         <input type="file" />
 
         <button onClick={() => savePic()}>Generate</button>
-        <button
-          onClick={() => {
-            setTextBottom("");
-            setTextTop("");
-            console.log(imgRef);
-          }}
-        >
-          Reset
-        </button>
+        <button onClick={() => deletePic()}>Reset</button>
       </div>
       <div>
         <Link className="link" to="/1">
@@ -135,6 +121,9 @@ function App() {
         <Link className="link" to="/5">
           5{" "}
         </Link>
+      </div>
+      <div id="create">
+        {savedURL ? <img src={savedURL} alt="saved Pic" /> : null}
       </div>
       <div class="galary">
         <Switch>
@@ -188,6 +177,7 @@ function App() {
               );
             })}
           </Route>
+          <Redirect to="/1" />
           <Route path="/"></Route>
         </Switch>
       </div>

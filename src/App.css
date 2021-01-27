@@ -43,24 +43,27 @@
 }
 
 .toptext {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   position: absolute;
   top: 0px;
-  left: 50%;
+  width: 100%;
 }
 
 .bottomtext {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: white;
   position: absolute;
   bottom: 0px;
-  left: 50%;
+  width: 100%;
 }
 
 img {
   width: 35vw;
   height: auto;
+}
+
+#create {
 }
 
 .link {
