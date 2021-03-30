@@ -79,6 +79,10 @@ function App() {
 
   return (
     <div className="App">
+      <br />
+      <div className="header">MEME FACTORY</div>
+      <br />
+
       <input
         type="test"
         placeholder="Text on Top"
