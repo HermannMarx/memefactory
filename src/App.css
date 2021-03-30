@@ -42,6 +42,8 @@ img {
   border: 1vh solid #bce6f6;
   border-radius: 10%;
   margin: 2vh;
+  width: 35vw;
+  height: auto;
 }
 
 .header {
@@ -60,6 +62,9 @@ img {
 .meme {
   position: relative;
   text-align: center;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
 }
 .meme img {
   max-height: 60vh;
@@ -82,12 +87,40 @@ img {
   width: 100%;
 }
 
-img {
-  width: 35vw;
-  height: auto;
+.memeheader {
+  height: 10vh;
+  width: fit-content;
+  font-size: 8vh;
+  background-color: #f9f3d1;
+  color: #f288b8;
+  font-weight: bold;
+  border: 2vh solid #1ebec2;
+  border-radius: 20%;
+  padding: 0 2vh;
+  margin: 0 auto;
 }
 
 #create {
+  width: fit-content;
+  height: fit-content;
+}
+
+#create img {
+  width: 25vw;
+  height: auto;
+  border: none;
+  border-radius: 0%;
+  margin: 0 auto;
+}
+
+.memeborder {
+  margin: 2vh 0;
+  font-size: 6vh;
+  font-weight: bold;
+  width: 100vw;
+  height: 10vh;
+  background-color: #f9f3d1;
+  color: #f288b8;
 }
 
 .link {

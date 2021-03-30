@@ -11,6 +11,7 @@ function App() {
   let [textBottom, setTextBottom] = useState("");
   let [allMemes, setAllMemes] = useState([]);
   let [savedURL, setSavedURL] = useState();
+  let [savedMemes, setSavedMemes] = useState([]);
 
   const imgRef = useRef(null);
 
@@ -59,6 +60,7 @@ function App() {
       .toPng(imgRef.current)
       .then(function (dataUrl) {
         setSavedURL(dataUrl);
+        setSavedMemes([...savedMemes, dataUrl]);
       })
       .catch(function (error) {
         console.error("oops, something went wrong!", error);
@@ -66,7 +68,8 @@ function App() {
   };
 
   const deletePic = () => {
-    setSavedURL(null);
+    //  setSavedURL(null);
+    setSavedMemes([]);
     setTextBottom("");
     setTextTop("");
   };
@@ -76,6 +79,10 @@ function App() {
   const browse3 = allMemes.slice(40, 60);
   const browse4 = allMemes.slice(60, 80);
   const browse5 = allMemes.slice(80, 100);
+
+  useEffect(() => console.log("This is savedMemes: " + savedMemes.length), [
+    savedMemes,
+  ]);
 
   return (
     <div className="App">
@@ -95,7 +102,7 @@ function App() {
         value={textBottom}
         onChange={(e) => setTextBottom(e.target.value)}
       ></input>
-      <div ref={imgRef} className="meme" id="my-node">
+      <div className="meme" id="my-node" ref={imgRef}>
         <img src={meme} alt="meme" />
 
         <h3 className="toptext">{textTop}</h3>
@@ -127,7 +134,17 @@ function App() {
         </Link>
       </div>
       <div id="create">
-        {savedURL ? <img src={savedURL} alt="saved Pic" /> : null}
+        {savedMemes.length ? (
+          <div className="memeborder">Your Created Memes</div>
+        ) : null}
+        {/*  {savedURL ? <img src={savedURL} alt="saved Pic" /> : null} */}
+        {savedMemes.length
+          ? savedMemes
+              .slice(0)
+              .reverse()
+              .map((meme, index) => <img src={meme} />)
+          : null}
+        {savedMemes.length ? <div className="memeborder"></div> : null}
       </div>
       <div class="galary">
         <Switch>
