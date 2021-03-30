@@ -6,7 +6,7 @@ import axios from "axios";
 import domtoimage from "dom-to-image";
 
 function App() {
-  let [meme, setMeme] = useState("https://i.imgflip.com/30b1gx.jpg");
+  let [meme, setMeme] = useState(null);
   let [textTop, setTextTop] = useState("");
   let [textBottom, setTextBottom] = useState("");
   let [allMemes, setAllMemes] = useState([]);
@@ -27,10 +27,12 @@ function App() {
   };
 
   const changePicture = () => {
-    const random = Math.floor(Math.random() * 99);
-    console.log("This is all Memes: ", allMemes);
-    console.log(random);
-    setMeme(allMemes[random].url);
+    if (allMemes.length !== 0) {
+      const random = Math.floor(Math.random() * 99);
+      console.log("This is all Memes: ", allMemes);
+      console.log(random);
+      setMeme(allMemes[random].url);
+    }
   };
 
   const generate = () => {};
@@ -80,6 +82,8 @@ function App() {
   const browse4 = allMemes.slice(60, 80);
   const browse5 = allMemes.slice(80, 100);
 
+  useEffect(() => changePicture(), [allMemes]);
+
   useEffect(() => console.log("This is savedMemes: " + savedMemes.length), [
     savedMemes,
   ]);
@@ -107,7 +111,7 @@ function App() {
         onChange={(e) => setTextBottom(e.target.value)}
       ></input>
       <div className="meme" id="my-node" ref={imgRef}>
-        <img src={meme} alt="meme" />
+        {meme === null ? null : <img src={meme} alt="meme" />}
 
         <h3 className="toptext">{textTop}</h3>
         <h3 className="bottomtext">{textBottom}</h3>
@@ -121,7 +125,7 @@ function App() {
             type="file"
             id="file"
             accept="image/*"
-            onChange={(e) => setMeme(e.target.value)}
+            /*      onChange={(e) => setMeme(e.target.value)} */
           />
         </label>
 
