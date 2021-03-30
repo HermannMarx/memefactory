@@ -84,6 +84,8 @@ function App() {
     savedMemes,
   ]);
 
+  useEffect(() => console.log("THIS is meme: ", meme), [meme]);
+
   return (
     <div className="App">
       <br />
@@ -91,12 +93,14 @@ function App() {
       <br />
 
       <input
+        className="input"
         type="test"
         placeholder="Text on Top"
         value={textTop}
         onChange={(e) => setTextTop(e.target.value)}
       ></input>
       <input
+        className="input"
         type="test"
         placeholder="Text on Bottom"
         value={textBottom}
@@ -110,28 +114,19 @@ function App() {
       </div>
       <div>
         <button onClick={() => changePicture()}>Change</button>
-        <button onClick={() => console.log(meme)}>Load</button>
-        <input type="file" />
+
+        <label for="file" className="upload">
+          Upload
+          <input
+            type="file"
+            id="file"
+            accept="image/*"
+            onChange={(e) => setMeme(e.target.value)}
+          />
+        </label>
 
         <button onClick={() => savePic()}>Generate</button>
         <button onClick={() => deletePic()}>Reset</button>
-      </div>
-      <div>
-        <Link className="link" to="/1">
-          1{" "}
-        </Link>
-        <Link className="link" to="/2">
-          2{" "}
-        </Link>
-        <Link className="link" to="/3">
-          3{" "}
-        </Link>
-        <Link className="link" to="/4">
-          4{" "}
-        </Link>
-        <Link className="link" to="/5">
-          5{" "}
-        </Link>
       </div>
       <div id="create">
         {savedMemes.length ? (
@@ -144,7 +139,24 @@ function App() {
               .reverse()
               .map((meme, index) => <img src={meme} />)
           : null}
-        {savedMemes.length ? <div className="memeborder"></div> : null}
+      </div>
+      <div className="memeborder">Select a meme!</div>
+      <div>
+        <Link className="link" to="/1">
+          <button>1</button>
+        </Link>
+        <Link className="link" to="/2">
+          <button>2</button>
+        </Link>
+        <Link className="link" to="/3">
+          <button>3</button>
+        </Link>
+        <Link className="link" to="/4">
+          <button>4</button>
+        </Link>
+        <Link className="link" to="/5">
+          <button>5</button>
+        </Link>
       </div>
       <div class="galary">
         <Switch>
@@ -202,11 +214,21 @@ function App() {
           <Route path="/"></Route>
         </Switch>
       </div>
-      <Link to="/1">1</Link>
-      <Link to="/2">2</Link>
-      <Link to="/3">3</Link>
-      <Link to="/4">4</Link>
-      <Link to="/5">5</Link>
+      <Link className="link" to="/1">
+        <button>1</button>
+      </Link>
+      <Link className="link" to="/2">
+        <button>2</button>
+      </Link>
+      <Link className="link" to="/3">
+        <button>3</button>
+      </Link>
+      <Link className="link" to="/4">
+        <button>4</button>
+      </Link>
+      <Link className="link" to="/5">
+        <button>5</button>
+      </Link>
     </div>
   );
 }
