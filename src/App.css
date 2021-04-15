@@ -58,6 +58,32 @@ button {
   font-size: 6vh;
 }
 
+.buttons {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons a {
+  background-color: #f9f3d1;
+  color: #f288b8;
+  font-weight: bold;
+  border: 1vh solid #1ebec2;
+  margin: 0 2vh;
+  padding: 0 1vh;
+  font-size: 6vh;
+  cursor: pointer;
+}
+
+.buttons a:hover {
+  background-color: #1ebec2;
+  color: #f9f3d1;
+}
+
+.active a {
+  background-color: #1ebec2;
+}
+
 .link {
   text-decoration: none;
 }

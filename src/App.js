@@ -1,9 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect, useReducer, useRef } from "react";
-import { Switch, Link, Route, Redirect } from "react-router-dom";
 import axios from "axios";
 import domtoimage from "dom-to-image";
+import ReactPaginate from "react-paginate";
 
 function App() {
   let [meme, setMeme] = useState(null);
@@ -12,6 +11,11 @@ function App() {
   let [allMemes, setAllMemes] = useState([]);
   let [savedURL, setSavedURL] = useState();
   let [savedMemes, setSavedMemes] = useState([]);
+  // for pagination
+  const [pageNumber, setPageNumber] = useState(0);
+  let [pageCount, setPageCount] = useState(null);
+  const memesPerPage = 20;
+  const passedMemes = pageNumber * memesPerPage;
 
   const imgRef = useRef(null);
 
@@ -21,27 +25,24 @@ function App() {
       .then((res) => {
         console.log(res.data.data.memes);
         setAllMemes(res.data.data.memes);
-        console.log("This is all memes: ", allMemes);
+        setPageCount(Math.ceil(res.data.data.memes.length / 20));
       })
       .catch((error) => console.log(error));
+  };
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
 
   const changePicture = () => {
     if (allMemes.length !== 0) {
       const random = Math.floor(Math.random() * 99);
-      console.log("This is all Memes: ", allMemes);
-      console.log(random);
+
+      console.log("This is ceil", Math.ceil(5.1));
+
       setMeme(allMemes[random].url);
     }
   };
-
-  const generate = () => {};
-
-  const reset = () => {};
-
-  useEffect(() => getMemes(), []);
-
-  // useEffect(() => setMeme(allMemes[0].url), [allMemes]);
 
   window.addEventListener("load", function () {
     document
@@ -76,19 +77,8 @@ function App() {
     setTextTop("");
   };
 
-  const browse1 = allMemes.slice(0, 20);
-  const browse2 = allMemes.slice(20, 40);
-  const browse3 = allMemes.slice(40, 60);
-  const browse4 = allMemes.slice(60, 80);
-  const browse5 = allMemes.slice(80, 100);
-
+  useEffect(() => getMemes(), []);
   useEffect(() => changePicture(), [allMemes]);
-
-  useEffect(() => console.log("This is savedMemes: " + savedMemes.length), [
-    savedMemes,
-  ]);
-
-  useEffect(() => console.log("THIS is meme: ", meme), [meme]);
 
   return (
     <div className="App">
@@ -121,12 +111,7 @@ function App() {
 
         <label for="file" className="upload">
           Upload
-          <input
-            type="file"
-            id="file"
-            accept="image/*"
-            /*      onChange={(e) => setMeme(e.target.value)} */
-          />
+          <input type="file" id="file" accept="image/*" />
         </label>
 
         <button onClick={() => savePic()}>Generate</button>
@@ -145,94 +130,32 @@ function App() {
           : null}
       </div>
       <div className="memeborder">Select a meme!</div>
-      <div>
-        <Link className="link" to="/1">
-          <button>1</button>
-        </Link>
-        <Link className="link" to="/2">
-          <button>2</button>
-        </Link>
-        <Link className="link" to="/3">
-          <button>3</button>
-        </Link>
-        <Link className="link" to="/4">
-          <button>4</button>
-        </Link>
-        <Link className="link" to="/5">
-          <button>5</button>
-        </Link>
-      </div>
+
       <div class="galary">
-        <Switch>
-          <Route path="/4">
-            {browse4.map((iteration, index) => {
-              return (
-                <img
-                  onClick={() => setMeme(iteration.url)}
-                  src={iteration.url}
-                />
-              );
-            })}
-          </Route>
-          <Route path="/1">
-            {browse1.map((iteration, index) => {
-              return (
-                <img
-                  onClick={() => setMeme(iteration.url)}
-                  src={iteration.url}
-                />
-              );
-            })}
-          </Route>
-          <Route path="/2">
-            {browse2.map((iteration, index) => {
-              return (
-                <img
-                  onClick={() => setMeme(iteration.url)}
-                  src={iteration.url}
-                />
-              );
-            })}
-          </Route>
-          <Route path="/3">
-            {browse3.map((iteration, index) => {
-              return (
-                <img
-                  onClick={() => setMeme(iteration.url)}
-                  src={iteration.url}
-                />
-              );
-            })}
-          </Route>
-          <Route path="/5">
-            {browse5.map((iteration, index) => {
-              return (
-                <img
-                  onClick={() => setMeme(iteration.url)}
-                  src={iteration.url}
-                />
-              );
-            })}
-          </Route>
-          <Redirect to="/1" />
-          <Route path="/"></Route>
-        </Switch>
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"buttons"}
+          activeClassName={"active"}
+        />
+        {allMemes
+          .slice(passedMemes, passedMemes + memesPerPage)
+          .map((iteration, index) => {
+            return (
+              <img onClick={() => setMeme(iteration.url)} src={iteration.url} />
+            );
+          })}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"buttons"}
+          activeClassName={"active"}
+        />
       </div>
-      <Link className="link" to="/1">
-        <button>1</button>
-      </Link>
-      <Link className="link" to="/2">
-        <button>2</button>
-      </Link>
-      <Link className="link" to="/3">
-        <button>3</button>
-      </Link>
-      <Link className="link" to="/4">
-        <button>4</button>
-      </Link>
-      <Link className="link" to="/5">
-        <button>5</button>
-      </Link>
     </div>
   );
 }
